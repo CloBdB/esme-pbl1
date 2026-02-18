@@ -1,8 +1,5 @@
 # minmax_algo.py
 import math
-
-from matplotlib.pylab import beta
-from streamlit import code
 from game_rules import EMPTY, AI_PLAYER, HUMAN_PLAYER
 from evaluation_position import evaluate_board
 
