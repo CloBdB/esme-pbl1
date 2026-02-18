@@ -34,12 +34,12 @@ class GameEngine:
         
         # 2. Build the 3 vertical columns
         for c in range(3):
-            column = [self.board[0][c], self.board[1][c], self.board[2][c]]
+            column = [self.board[i][c] for i in range(3)]
             lines_to_check.append(column)
             
         # 3. Build the 2 diagonals manually
-        diag1 = [self.board[0][0], self.board[1][1], self.board[2][2]]
-        diag2 = [self.board[0][2], self.board[1][1], self.board[2][0]]
+        diag1 = [self.board[i][i] for i in range(3)]
+        diag2 = [self.board[i][2 - i] for i in range(3)]
         
         lines_to_check.append(diag1)
         lines_to_check.append(diag2)

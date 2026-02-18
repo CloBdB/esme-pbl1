@@ -61,6 +61,6 @@ List the main third-party libraries used and _why_ they were chosen:
 
 What features would you add if you had more time or a larger budget?
 
-_Generated as part of the \[Course Name] Production Deliverables._
+_Generated as part of the \[Advanced Algorithmic 3] Production Deliverables._
 
 __
