@@ -34,4 +34,53 @@ class TicTacToe(QWidget):
                 grid_layout.addWidget(btn, r, c) # add the button to the grid at position r and c
                 row.append(btn) 
             self.buttons.append(row) #add the whole row in the self.buttons so self.button[r][c] is the button at r and c
+            
+        self.reset_btn = QPushButton("Reset")
+        self.quit_btn = QPushButton("Quit")
+
+        bottom_layout = QHBoxLayout()
+        bottom_layout.setSpacing(30)
+        bottom_layout.addWidget(self.reset_btn)
+        bottom_layout.addWidget(self.quit_btn)
+
+        main_layout = QVBoxLayout()
+        main_layout.addWidget(self.title_label)
+        main_layout.addWidget(self.status_label)
+        main_layout.addWidget(self.depth_box)
+        main_layout.addLayout(grid_layout)
+        main_layout.addLayout(bottom_layout)
+
+        self.setLayout(main_layout) # Applies main_layout to the window
+
+
+    def set_cell(self, r, c, text): 
+        """Takes row, column, text, then find the position of button [r][c] in the grid and changes the text of that button to text"""
+        self.buttons[r][c].setText(text) 
+        
+
+    
+    def set_status(self, text):
+        """recieves a message string and udates the status label on the screen with new message"""
+        self.status_label.setText(text)
+
+    
+    def get_depth(self):
+        """returns the difficulty level selected by the user"""
+        levels = [1, 3, 9]
+        return levels[self.depth_box.currentIndex()]
+
+    
+    def disable_board(self):
+        """disables all buttons on the board once game is over"""
+        for row in self.buttons:
+            for btn in row:
+                btn.setEnabled(False)
+
+    
+    def enable_board(self):
+        """enables all buttons on board, allows playing again after reset"""
+        for row in self.buttons:
+            for btn in row:
+                btn.setEnabled(True)
+
 
