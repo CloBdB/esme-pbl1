@@ -1,71 +1,69 @@
-# game_engine.py
-
-# On définit des étiquettes pour ne pas se tromper dans le texte
-VIDE = ' '
-JOUEUR_IA = 'O'
-JOUEUR_HUMAIN = 'X'
+# We define labels to avoid making mistakes in the text
+EMPTY = ' '
+AI_PLAYER = 'O'
+HUMAN_PLAYER = 'X'
 
 class GameEngine:
     def __init__(self):
-        # On crée un plateau de 3x3 manuellement, c'est plus visuel
-        # C'est une liste qui contient 3 listes (les lignes)
+        # We create a 3x3 board manually; it's more visual
+        # It's a list containing 3 lists (the rows)
         self.board = [
-            [VIDE, VIDE, VIDE],
-            [VIDE, VIDE, VIDE],
-            [VIDE, VIDE, VIDE]
+            [EMPTY, EMPTY, EMPTY],
+            [EMPTY, EMPTY, EMPTY],
+            [EMPTY, EMPTY, EMPTY]
         ]
 
     def is_moves_left(self):
-        """ Vérifie s'il reste au moins une case vide """
-        for ligne in self.board:
-            for case in ligne:
-                if case == VIDE:
-                    return True # On a trouvé une case vide !
-        return False # Tout est plein
+        """ Checks if there is at least one empty cell left """
+        for row in self.board:
+            for cell in row:
+                if cell == EMPTY:
+                    return True # Found an empty cell!
+        return False # The board is full
 
     def get_lines(self):
         """ 
-        Cette fonction rassemble toutes les lignes, colonnes et 
-        diagonales pour que l'on puisse les vérifier facilement.
+        This function gathers all rows, columns, and 
+        diagonals so we can check them easily.
         """
-        lignes_a_verifier = []
+        lines_to_check = []
         
-        # 1. On ajoute les 3 lignes horizontales
-        for ligne in self.board:
-            lignes_a_verifier.append(ligne)
+        # 1. Add the 3 horizontal rows
+        for row in self.board:
+            lines_to_check.append(row)
         
-        # 2. On fabrique les 3 colonnes verticales
+        # 2. Build the 3 vertical columns
         for c in range(3):
-            colonne = [self.board[0][c], self.board[1][c], self.board[2][c]]
-            lignes_a_verifier.append(colonne)
+            column = [self.board[0][c], self.board[1][c], self.board[2][c]]
+            lines_to_check.append(column)
             
-        # 3. On fabrique les 2 diagonales à la main
+        # 3. Build the 2 diagonals manually
         diag1 = [self.board[0][0], self.board[1][1], self.board[2][2]]
         diag2 = [self.board[0][2], self.board[1][1], self.board[2][0]]
         
-        lignes_a_verifier.append(diag1)
-        lignes_a_verifier.append(diag2)
+        lines_to_check.append(diag1)
+        lines_to_check.append(diag2)
         
-        return lignes_a_verifier
+        return lines_to_check
 
     def check_winner(self):
-        """ Regarde si quelqu'un a aligné 3 symboles """
-        toutes_les_lignes = self.get_lines()
+        """ Checks if someone has aligned 3 symbols """
+        all_lines = self.get_lines()
         
-        for ligne in toutes_les_lignes:
-            # On vérifie si la ligne contient 3 fois le même symbole
-            # Et on s'assure que ce n'est pas une ligne de cases vides !
-            if ligne[0] == ligne[1] == ligne[2] and ligne[0] != VIDE:
-                return ligne[0] # Renvoie 'X' ou 'O'
-        return None # Personne n'a gagné
+        for line in all_lines:
+            # Check if the line contains the same symbol 3 times
+            # And ensure it's not a line of empty cells!
+            if line[0] == line[1] == line[2] and line[0] != EMPTY:
+                return line[0] # Returns 'X' or 'O'
+        return None # No one has won yet
 
-    def make_move(self, r, c, joueur):
-        """ Place un pion si la case est libre """
-        if self.board[r][c] == VIDE:
-            self.board[r][c] = joueur
+    def make_move(self, r, c, player):
+        """ Places a piece if the cell is free """
+        if self.board[r][c] == EMPTY:
+            self.board[r][c] = player
             return True
         return False
 
     def undo_move(self, r, c):
-        """ Efface un pion (utile pour que l'IA puisse tester des coups) """
-        self.board[r][c] = VIDE
+        """ Clears a piece (useful for the AI to test potential moves) """
+        self.board[r][c] = EMPTY
