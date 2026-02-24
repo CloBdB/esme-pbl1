@@ -4,9 +4,7 @@ AI_PLAYER = 'O'
 HUMAN_PLAYER = 'X'
 
 class GameEngine:
-    def __init__(self):
-        # We create a 3x3 board manually; it's more visual
-        # It's a list containing 3 lists (the rows)
+    def __init__(self):                                                     # The board is a list of list (empty at first)
         self.board = [
             [EMPTY, EMPTY, EMPTY],
             [EMPTY, EMPTY, EMPTY],
@@ -14,12 +12,12 @@ class GameEngine:
         ]
 
     def is_moves_left(self):
-        """ Checks if there is at least one empty cell left """
+        """ Checks if there are any moves left (at least one empty cell) """
         for row in self.board:
             for cell in row:
                 if cell == EMPTY:
-                    return True # Found an empty cell!
-        return False # The board is full
+                    return True 
+        return False
 
     def get_lines(self):
         """ 
@@ -28,17 +26,14 @@ class GameEngine:
         """
         lines_to_check = []
         
-        # 1. Add the 3 horizontal rows
-        for row in self.board:
+        for row in self.board:                                              # Add the 3 rows
             lines_to_check.append(row)
         
-        # 2. Build the 3 vertical columns
-        for c in range(3):
+        for c in range(3):                                                  # Add the 3 columns
             column = [self.board[i][c] for i in range(3)]
             lines_to_check.append(column)
             
-        # 3. Build the 2 diagonals manually
-        diag1 = [self.board[i][i] for i in range(3)]
+        diag1 = [self.board[i][i] for i in range(3)]                        # Add the 2 diagonals 
         diag2 = [self.board[i][2 - i] for i in range(3)]
         
         lines_to_check.append(diag1)
@@ -51,12 +46,10 @@ class GameEngine:
         all_lines = self.get_lines()
         
         for line in all_lines:
-            # Check if the line contains the same symbol 3 times
-            # And ensure it's not a line of empty cells!
-            if line[0] == line[1] == line[2] and line[0] != EMPTY:
-                return line[0] # Returns 'X' or 'O'
-        return None # No one has won yet
-
+            if line[0] == line[1] == line[2] and line[0] != EMPTY:          # If all 3 cells in the line are the same and not empty, we have a winner
+                    return line[0]                                          # Returns 'X' or 'O'
+        return None 
+    
     def make_move(self, r, c, player):
         """ Places a piece if the cell is free """
         if self.board[r][c] == EMPTY:
