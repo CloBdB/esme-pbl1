@@ -1,6 +1,8 @@
 import sys
+import random
 from typing import Self
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtCore import QTimer, QEventLoop
 from GUI_layout import TicTacToe
 from game_rules import GameEngine, EMPTY, AI_PLAYER, HUMAN_PLAYER
 from min_max_algo import MinMaxAlgo
@@ -24,6 +26,12 @@ class GameController:
         self.gui.quit_btn.clicked.connect(sys.exit)
         self.gui.mode_box.currentIndexChanged.connect(self.reset_game)               # Resets the board when the game mode is changed 
 
+    def sleep(self, milliseconds):
+        """ Creates a non-blocking delay """
+        loop = QEventLoop()
+        QTimer.singleShot(milliseconds, loop.quit)
+        loop.exec_()
+    
     def check_game_over(self):
 
         """ 
@@ -65,8 +73,8 @@ class GameController:
             self.engine.make_move(ai_row, ai_col, AI_PLAYER)
             self.gui.set_cell(ai_row, ai_col, AI_PLAYER)
             
-            if not self.check_game_over():
-                    self.gui.set_status("Human player turn (X)")
+            if not self.check_game_over():                                                                                              
+                self.gui.set_status("Human player turn (X)")
         else:
             self.check_game_over()                                                   # If the board is full or game ended, don't try to unpack
 
@@ -103,6 +111,10 @@ class GameController:
             self.gui.set_cell(r, c, HUMAN_PLAYER)
 
             if not self.check_game_over():
+                self.gui.set_status("AI is thinking")                                # Update status to show AI is thinking before the next move
+                QApplication.processEvents()                                         # Force UI update so user sees text immediately
+                delay = random.randint(200, 400)                                     # Random delay between 200-400ms to make AI seem more human-like
+                self.sleep(delay)
                 self.ai_move()                                                       # AI's turn
 
     def reset_game(self):
