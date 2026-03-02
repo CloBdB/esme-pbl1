@@ -22,7 +22,7 @@ class MinMaxAlgo:
                 for c in range(3):
                     if self.engine.board[r][c] == EMPTY:
                         self.engine.board[r][c] = AI_PLAYER
-                        val = self.minimax(depth + 1, False, max_depth, alpha, beta)
+                        val = self.minimax(depth + 1, False, max_depth, alpha, beta)            
                         self.engine.board[r][c] = EMPTY
                         best = max(best, val)
                         alpha = max(alpha, best)
