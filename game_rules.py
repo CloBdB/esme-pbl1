@@ -1,3 +1,5 @@
+import random
+
 # We define labels to avoid making mistakes in the text
 EMPTY = ' '
 AI_PLAYER = 'O'
@@ -74,6 +76,18 @@ class GameEngine:
             return True
         return False
 
-    def undo_move(self, r, c):
-        """ Clears a piece (useful for the AI to test potential moves) """
-        self.board[r][c] = EMPTY
+    def empty_squares(self):
+        """ Returns a list of empty squares (row, column) """
+        empty_squares = []
+        for r in range(3):
+            for c in range(3):
+                if self.board[r][c] == EMPTY:
+                    empty_squares.append((r, c))
+        return empty_squares
+
+    def get_random_move(self):
+        """ Returns a random move from the available empty squares """
+        empty_squares = self.empty_squares()
+        if empty_squares:
+            return random.choice(empty_squares)
+        return None

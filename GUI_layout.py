@@ -9,13 +9,15 @@ class TicTacToe(QWidget):
         super().__init__()                                                           # Calls the Qwidget constructor to correctly build the window
         
         self.setWindowTitle("TicTacToe")
-        self.setMinimumSize(700, 700)
+        self.setMinimumSize(700, 700)                                                # Set a minimum size for the window to prevent it from being too small
         self.resize(800, 800)
         self.setStyleSheet("background-color: lightblue")
 
         self.title_label = QLabel("TicTacToe vs AI")
         self.title_label.setAlignment(Qt.AlignCenter)
         self.title_label.setStyleSheet("font-size: 32px; font-weight: bold;")        # Larger title
+
+        
 
         self.status_label = QLabel("Your turn (X)")                                  # Creates another label for message
         self.status_label.setAlignment(Qt.AlignCenter)

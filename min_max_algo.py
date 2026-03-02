@@ -21,7 +21,7 @@ class MinMaxAlgo:
             return score
 
         if is_max:
-            best = -math.inf                                                                # floating-point negative infinity
+            best = -math.inf                                                                # Floating-point negative infinity
             for r in range(3):
                 for c in range(3):
                     if self.engine.board[r][c] == EMPTY:
@@ -35,7 +35,7 @@ class MinMaxAlgo:
                             break
             return best
         else:
-            best = math.inf                                                                 # floating-point positive infinity
+            best = math.inf                                                                 # Floating-point positive infinity
             for r in range(3):
                 for c in range(3):
                     if self.engine.board[r][c] == EMPTY:

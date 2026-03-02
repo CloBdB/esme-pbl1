@@ -61,22 +61,33 @@ class GameController:
 
         Updates the UI status, calculates the optimal move using Minimax, 
         updates the game state, and checks for game termination.
+        For easy level, the AI doesn't calculate the best move, it just picks a random available move.
+        This is done to make the game more fun and less predictable for the player.
         """
 
         self.gui.set_status("AI is thinking")                                        # AI's turn
         QApplication.processEvents()                                                 # Refreshes the screen to show the status
-        depth = self.gui.get_depth()                                                 # Get the depth from QComboBox
-        move, move_scores = self.ai.get_best_move(depth)                             # AI chooses it's best move (get_best_move returns a tuple)
+        depth = self.gui.get_depth()                                                 # Get the depth from QComboBox (level easy medium or hard)
+        if depth >= 3:
+            move, move_scores = self.ai.get_best_move(depth)                         # AI chooses it's best move fro level medium or hard (get_best_move returns a tuple)
 
-        if move is not None:
-            ai_row, ai_col = move
-            self.engine.make_move(ai_row, ai_col, AI_PLAYER)
-            self.gui.set_cell(ai_row, ai_col, AI_PLAYER)
+            if move is not None:
+                ai_row, ai_col = move
+                self.engine.make_move(ai_row, ai_col, AI_PLAYER)
+                self.gui.set_cell(ai_row, ai_col, AI_PLAYER)
+                
+                if not self.check_game_over():                                                                                              
+                    self.gui.set_status("Human player turn (X)")
+            else:
+                self.check_game_over()                                               # If the board is full or game ended, don't try to unpack
+        else:               
+            if self.engine.get_random_move() is not None:
+                easy_row, easy_col = self.engine.get_random_move()                   # Get a random available move for easy level
+                self.engine.make_move(easy_row, easy_col, AI_PLAYER)                 # Makes the easy move
+                self.gui.set_cell(easy_row, easy_col, AI_PLAYER)
+                self.check_game_over()
             
-            if not self.check_game_over():                                                                                              
-                self.gui.set_status("Human player turn (X)")
-        else:
-            self.check_game_over()                                                   # If the board is full or game ended, don't try to unpack
+
 
     def player_move(self, r, c):
 
