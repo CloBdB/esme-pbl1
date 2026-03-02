@@ -8,8 +8,7 @@ class GameEngine:
         self.board = [
             [EMPTY, EMPTY, EMPTY],
             [EMPTY, EMPTY, EMPTY],
-            [EMPTY, EMPTY, EMPTY]
-        ]
+            [EMPTY, EMPTY, EMPTY]]
 
     def is_moves_left(self):
         """ Checks if there are any moves left (at least one empty cell) """
@@ -42,14 +41,32 @@ class GameEngine:
         return lines_to_check
 
     def check_winner(self):
-        """ Checks if someone has aligned 3 symbols """
-        all_lines = self.get_lines()
+        """ 
+        Checks if someone has aligned 3 symbols.
+        Returns (winner, coordinates) or (None, None). 
+        Use of this format to highlight the winning line in the GUI.
+        """
         
-        for line in all_lines:
-            if line[0] == line[1] == line[2] and line[0] != EMPTY:          # If all 3 cells in the line are the same and not empty, we have a winner
-                    return line[0]                                          # Returns 'X' or 'O'
-        return None 
+        lines_to_check = []                                                                         # We store all rows, columns and diagonals in this list to check them easily
+
+        for r in range(3):
+            lines_to_check.append((self.board[r], [(r, i) for i in range(3)]))                      # Add rows with their coordinates
+        
+        for c in range(3):
+            column = [self.board[i][c] for i in range(3)]
+            lines_to_check.append((column, [(i, c) for i in range(3)]))                             # Add columns with their coordinates
+        
+        diag1 = ([self.board[i][i] for i in range(3)], [(i, i) for i in range(3)])                  # Add diagonal 1 with its coordinates
+        diag2 = ([self.board[i][2 - i] for i in range(3)], [(i, 2 - i) for i in range(3)])          # Add diagonal 2 with its coordinates               
     
+        lines_to_check.append(diag1)
+        lines_to_check.append(diag2)
+
+        for line, coords in lines_to_check:                                                         # Check each line
+            if line[0] == line[1] == line[2] != EMPTY:                                              # If all 3 symbols are the same and not empty, we have a winner
+                return line[0], coords                                                              # Return the winner and the coordinates of the winning line
+        return None, None                                                                           # If no winner, return None
+
     def make_move(self, r, c, player):
         """ Places a piece if the cell is free """
         if self.board[r][c] == EMPTY:

@@ -26,10 +26,16 @@ class TicTacToe(QWidget):
         self.depth_box.setStyleSheet("font-size: 16px; padding: 6px;")               # Bigger dropdow text
         self.depth_box.setFixedWidth(200)                                            # Set a fixed width 
 
+        self.mode_box = QComboBox()                                                  # Creates a drop down list widget for the game mode
+        self.mode_box.addItems(["Human vs AI", "AI vs Human", "Human vs Human"])     # Add the 3 game mode choices inside the drop down list
+        self.mode_box.setStyleSheet("font-size: 16px; padding: 6px;")               
+        self.mode_box.setFixedWidth(200)
+
         # Center the dropdown horizontally
         depth_layout = QHBoxLayout()
         depth_layout.addStretch()
         depth_layout.addWidget(self.depth_box)
+        depth_layout.addWidget(self.mode_box)                                        # Button for the game mode
         depth_layout.addStretch()
 
         self.buttons = []
@@ -60,7 +66,7 @@ class TicTacToe(QWidget):
         self.quit_btn.setFixedHeight(50)
         self.quit_btn.setStyleSheet("font-size: 16px;")
 
-        bottom_layout = QHBoxLayout()
+        bottom_layout = QHBoxLayout()                                                # Add of reset and quit buttons at the bottom of the window
         bottom_layout.setSpacing(30)
         bottom_layout.addWidget(self.reset_btn)
         bottom_layout.addWidget(self.quit_btn)
@@ -70,41 +76,42 @@ class TicTacToe(QWidget):
         main_layout.setContentsMargins(40, 30, 40, 30)
         main_layout.addWidget(self.title_label)
         main_layout.addWidget(self.status_label)
-        main_layout.addWidget(self.depth_box)
+
+        main_layout.addLayout(depth_layout)                                          # Add the depth selection layout
+
         main_layout.addLayout(grid_container)
         main_layout.addLayout(bottom_layout)
 
         self.setLayout(main_layout)                                                  # Applies main_layout to the window
 
-
     def set_cell(self, r, c, text): 
         """ Takes row, column, text, then find the position of button [r][c] in the grid and changes the text of that button to text """
         self.buttons[r][c].setText(text) 
-        
-
     
     def set_status(self, text):
         """ Recieves a message string and udates the status label on the screen with new message """
         self.status_label.setText(text)
 
-    
     def get_depth(self):
         """ Returns the difficulty level selected by the user """
         levels = [1, 3, 9]
         return levels[self.depth_box.currentIndex()]
-
     
     def disable_board(self):
         """ Disables all buttons on the board once game is over """
         for row in self.buttons:
             for btn in row:
                 btn.setEnabled(False)
-
     
     def enable_board(self):
-        """ Enables all buttons on board, allows playing again after reset """
+        """ Enables all buttons on board and resets their style for a new game """
         for row in self.buttons:
             for btn in row:
                 btn.setEnabled(True)
+                btn.setStyleSheet("font-size: 56px; font-weight: bold;")                  # Reset style to original 
 
+    def highlight_winning_line(self, coordinates):
+        """ Highlights the winning line by changing the background color of the buttons in that line """
+        for r, c in coordinates:
+            self.buttons[r][c].setStyleSheet("font-size: 56px; font-weight: bold; background-color: lightgreen;")
 
