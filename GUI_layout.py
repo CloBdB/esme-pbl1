@@ -17,7 +17,9 @@ class TicTacToe(QWidget):
         self.title_label.setAlignment(Qt.AlignCenter)
         self.title_label.setStyleSheet("font-size: 32px; font-weight: bold;")        # Larger title
 
-        
+        self.score_label = QLabel("Player Accuracy: 100%  |  AI Accuracy: 100%")
+        self.score_label.setAlignment(Qt.AlignCenter)
+        self.score_label.setStyleSheet("font-size: 16px; font-weight: bold; color: blue;")        
 
         self.status_label = QLabel("Your turn (X)")                                  # Creates another label for message
         self.status_label.setAlignment(Qt.AlignCenter)
@@ -78,6 +80,7 @@ class TicTacToe(QWidget):
         main_layout.setContentsMargins(40, 30, 40, 30)
         main_layout.addWidget(self.title_label)
         main_layout.addWidget(self.status_label)
+        main_layout.addWidget(self.score_label)
 
         main_layout.addLayout(depth_layout)                                          # Add the depth selection layout
 
@@ -93,6 +96,10 @@ class TicTacToe(QWidget):
     def set_status(self, text):
         """ Recieves a message string and udates the status label on the screen with new message """
         self.status_label.setText(text)
+        
+    def set_score(self, text):
+        """ Updates the dedicated accuracy label """
+        self.score_label.setText(text)
 
     def get_depth(self):
         """ Returns the difficulty level selected by the user """

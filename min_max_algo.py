@@ -72,3 +72,17 @@ class MinMaxAlgo:
                         best_move = (r, c)
                         
         return best_move, move_scores
+    
+    def get_move_score(self, row, col, is_maximizing_player):
+        """
+        Evaluates the score of a specific move by simulating it 
+        and running Minimax at full depth.
+        """
+        player = AI_PLAYER if is_maximizing_player else HUMAN_PLAYER                        # Simulate the move
+        self.engine.board[row][col] = player
+        
+        score = self.minimax(0, not is_maximizing_player, 9, -math.inf, math.inf)           # Run Minimax on the resulting board
+                                                                                            # We use a large depth (9) to get the "Perfect" truth
+        self.engine.board[row][col] = EMPTY                                                 # Undo the move
+        
+        return score
