@@ -18,7 +18,7 @@ Instructions on how to get this project running on a fresh machine.
 
 1. **Clone the repo:**\
    git clone gh repo clone marc-esme/esme-pbl
-   cd \[project-folder]
+   cd \esme-pbl1
 
 2. **Setup Virtual Environment:**\
    python -m venv .venv
