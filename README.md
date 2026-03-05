@@ -17,8 +17,8 @@ The objective of this project was to simulate intelligent decision-making using 
 Instructions on how to get this project running on a fresh machine.
 
 1. **Clone the repo:**\
-   git clone \[your-repo-link]\
-   cd \[project-folder]
+   git clone gh repo clone CloBdB/esme-pbl1
+   cd esme-pbl1
 
 2. **Setup Virtual Environment:**\
    python -m venv .venv\
