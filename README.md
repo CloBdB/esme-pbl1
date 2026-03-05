@@ -1,6 +1,6 @@
 # **📦 \[Tic Tac Toe]**
 
-**MVP Status:** \[e.g., v1.0-Production]
+**MVP Status:** v1.0-Production
 
 **Group Members:** Raphaël Dussart, Clovis Bogdan de Badereau, Damien du Bourguet, Zahed Al-Kassous, Gabriel Barbier
 
@@ -17,12 +17,12 @@ The objective of this project was to simulate intelligent decision-making using 
 Instructions on how to get this project running on a fresh machine.
 
 1. **Clone the repo:**\
-   git clone gh repo clone marc-esme/esme-pbl
-   cd \esme-pbl1
+   git clone \[your-repo-link]\
+   cd \[project-folder]
 
 2. **Setup Virtual Environment:**\
-   python -m venv .venv
-   source .venv/bin/activate  # Sur Windows : .venv\Scripts\activate
+   python -m venv .venv\
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
 3. **Install Dependencies:**\
    pip install -r requirements.txt
@@ -72,7 +72,8 @@ This separation ensures clear responsibilities between:
 
 ## **🧪 Testing & Validation**
 
-The application can be validated by running python main.py.
+The application can be validated by running:
+python main.py
 
 ### Manual Validation Steps (Happy Path)
 Launch the application.
@@ -114,5 +115,7 @@ If more development time were available, we would focus on extending and refinin
 - Generalize the engine to support larger boards like 4x4 gameplay.
 - Implement a statistics dashboard showing win rate, average move quality, and AI performance metrics.
 - Improve UI design with animations, sound effects, and smoother transitions.
+- Add a hint button to help the player play the best move available
+
 
 
