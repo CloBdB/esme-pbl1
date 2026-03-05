@@ -1,1 +1,1 @@
-PyQt5pip install -r requirements.txt
+PyQt5
